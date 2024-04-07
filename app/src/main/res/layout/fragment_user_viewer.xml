@@ -45,8 +45,8 @@
                     tools:text="21" />
 
                 <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_weight="1" />
 
                 <TextView
@@ -101,6 +101,17 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 tools:text="november 1998" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_projects"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/user_project_item" />
         </LinearLayout>
     </ScrollView>
 

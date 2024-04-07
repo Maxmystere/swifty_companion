@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +16,7 @@ import tech.maxdevcoveries.swiftycompanion.R
 import tech.maxdevcoveries.swiftycompanion.databinding.FragmentUserViewerBinding
 import tech.maxdevcoveries.swiftycompanion.lib.FortyTwoApiClient
 import tech.maxdevcoveries.swiftycompanion.lib.FortyTwoUser
-import kotlin.math.abs
+import tech.maxdevcoveries.swiftycompanion.ui.adapter.UserProjectAdapter
 
 class UserViewerFragment : Fragment() {
 
@@ -49,11 +51,11 @@ class UserViewerFragment : Fragment() {
             binding.textUserEmail.text = user.email
             binding.textUserPoolDate.text = "${user.poolMonth} ${user.poolYear}"
 
-            val xpPercent = (user.getActiveCursus()!!.level * 100).toInt() % 100
+            val xpPercent = (user.getActiveCursus().level * 100).toInt() % 100
 
             binding.progressBarLevel.progress = xpPercent
 
-            binding.textViewLevel.text = "${user.getActiveCursus()!!.level.toInt()}"
+            binding.textViewLevel.text = "${user.getActiveCursus().level.toInt()}"
             binding.textViewXpPercent.text = "$xpPercent%"
 
             binding.viewSwitcherLoadGuard.displayedChild = 0 // 1
@@ -62,6 +64,14 @@ class UserViewerFragment : Fragment() {
                 .placeholder(R.drawable.forty_two_unknown)
                 .into(binding.imageUserProfile)
 
+            binding.recyclerViewProjects.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            binding.recyclerViewProjects.adapter = UserProjectAdapter(user.getCursusProjects())
+            binding.recyclerViewProjects.setHasFixedSize(true)
         }
     }
 

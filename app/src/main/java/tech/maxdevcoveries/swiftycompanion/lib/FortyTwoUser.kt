@@ -27,6 +27,28 @@ data class CursusUser(
     val level:Float,
 )
 
+data class ProjectInfo(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
+    val name: String,
+)
+
+data class UserProject(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("final_mark")
+    val finalMark: Int?,
+    @SerializedName("status")
+    val status: String,
+    @SerializedName("validated?")
+    val isValidated: Boolean?,
+    @SerializedName("project")
+    val project: ProjectInfo,
+    @SerializedName("cursus_ids")
+    val cursusIds: Array<Int>,
+)
+
 data class FortyTwoUser(
     @SerializedName("id")
     val id:String,
@@ -42,12 +64,33 @@ data class FortyTwoUser(
     val poolYear:String,
     @SerializedName("cursus_users")
     val cursusUsers:Array<CursusUser>,
+    @SerializedName("projects_users")
+    val projectsUsers: Array<UserProject>,
 )
 {
-    fun getActiveCursus():CursusUser?
+    companion object {
+        // Current main cursus is of id 21
+        const val MAIN_CURSUS_ID = 21
+    }
+
+    fun getActiveCursus(): CursusUser
     {
-        return cursusUsers.find {
-            it.cursusId == 21 // Current main cursus is of id 21
+        if (cursusUsers.isEmpty()) {
+            return CursusUser(0, 0.0F)
+        }
+        val mainCursus = cursusUsers.find {
+            it.cursusId == MAIN_CURSUS_ID
+        }
+        if (mainCursus != null) {
+            return mainCursus
+        }
+        // Fallback to first found cursus if main one isn't present
+        return cursusUsers.first()
+    }
+
+    fun getCursusProjects(): List<UserProject> {
+        return projectsUsers.filter {
+            it.cursusIds.contains(MAIN_CURSUS_ID)
         }
     }
 }

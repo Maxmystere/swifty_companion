@@ -29,6 +29,10 @@ class SearchUserFragment : Fragment() {
         _binding = FragmentSearchUserBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.triggerSearchButton.setOnClickListener {
+            binding.searchUserSearchView.setQuery(binding.searchUserSearchView.query, true)
+        }
+
         binding.searchUserSearchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -46,9 +50,6 @@ class SearchUserFragment : Fragment() {
                     view!!.findNavController()
                         .navigate(act)
                 }
-                // a toast message as no  data found..
-                Toast.makeText(context, query, Toast.LENGTH_LONG)
-                    .show()
 
                 return false
             }
@@ -61,9 +62,6 @@ class SearchUserFragment : Fragment() {
                 return false
             }
         })
-        binding.searchUserSearchView.setOnSearchClickListener {
-            Log.d("MaxLog", binding.searchUserSearchView.query.toString())
-        }
 
         return root
     }
