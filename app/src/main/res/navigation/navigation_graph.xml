@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@+id/nav_search_user">
+
+    <action
+        android:id="@+id/toUserViewer"
+        app:destination="@id/nav_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_search_user"
+        android:name="tech.maxdevcoveries.swiftycompanion.ui.transform.SearchUserFragment"
+        android:label="@string/menu_search_user"
+        tools:layout="@layout/fragment_search_user">
+        <action
+            android:id="@+id/action_nav_search_user_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="tech.maxdevcoveries.swiftycompanion.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="tech.maxdevcoveries.swiftycompanion.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>
