@@ -1,8 +1,5 @@
 package tech.maxdevcoveries.swiftycompanion
 
-import android.accounts.AccountManager
-import android.accounts.AccountManagerCallback
-import android.accounts.AccountManagerFuture
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,24 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import tech.maxdevcoveries.swiftycompanion.databinding.ActivityMainBinding
-
-/*
-private class OnTokenAcquired : AccountManagerCallback<Bundle> {
-
-    override fun run(result: AccountManagerFuture<Bundle>) {
-        // Get the result of the operation from the AccountManagerFuture.
-        val bundle: Bundle = result.result
-
-        // The token is a named value in the bundle. The name of the value
-        // is stored in the constant AccountManager.KEY_AUTHTOKEN.
-        val token = bundle.getString(AccountManager.KEY_AUTHTOKEN)
-    }
-}
-*/
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,37 +22,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab?.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .setAnchorView(R.id.fab).show()
-        }
-
         val navHostFragment =
-                (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment?)!!
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment?)!!
         val navController = navHostFragment.navController
 
-        binding.navView?.let {
-            appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_search_user, R.id.nav_slideshow, R.id.nav_settings
-            ),
-                    binding.drawerLayout
-            )
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            it.setupWithNavController(navController)
-        }
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_search_user))
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val result = super.onCreateOptionsMenu(menu)
         // Using findViewById because NavigationView exists in different layout files
         // between w600dp and w1240dp
-        val navView: NavigationView? = findViewById(R.id.nav_view)
-        if (navView == null) {
-            // The navigation drawer already has the items including the items in the overflow menu
-            // We only inflate the overflow menu if the navigation drawer isn't visible
-            menuInflater.inflate(R.menu.overflow, menu)
-        }
+
+        // The navigation drawer already has the items including the items in the overflow menu
+        // We only inflate the overflow menu if the navigation drawer isn't visible
+        menuInflater.inflate(R.menu.overflow, menu)
+
         return result
     }
 

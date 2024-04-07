@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.slideshow.SlideshowFragment">
+    tools:context=".ui.fragments.SearchUserFragment">
 
     <Space
         android:layout_width="match_parent"

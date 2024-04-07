@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/nav_search_user"
-        android:name="tech.maxdevcoveries.swiftycompanion.ui.transform.SearchUserFragment"
+        android:name="tech.maxdevcoveries.swiftycompanion.ui.fragments.SearchUserFragment"
         android:label="@string/menu_search_user"
         tools:layout="@layout/fragment_search_user">
         <action
@@ -21,9 +21,9 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="tech.maxdevcoveries.swiftycompanion.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow">
+        android:name="tech.maxdevcoveries.swiftycompanion.ui.fragments.UserViewerFragment"
+        android:label="{userId}"
+        tools:layout="@layout/fragment_user_viewer">
         <argument
             android:name="userId"
             app:argType="string" />

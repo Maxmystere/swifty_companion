@@ -1,4 +1,4 @@
-package tech.maxdevcoveries.swiftycompanion.ui.transform
+package tech.maxdevcoveries.swiftycompanion.ui.fragments
 
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
@@ -10,17 +10,9 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import tech.maxdevcoveries.swiftycompanion.FortyTwoSearchRecentSuggestions
-import tech.maxdevcoveries.swiftycompanion.R
 import tech.maxdevcoveries.swiftycompanion.databinding.FragmentSearchUserBinding
 
-/**
- * Fragment that demonstrates a responsive layout pattern where the format of the content
- * transforms depending on the size of the screen. Specifically this Fragment shows items in
- * the [RecyclerView] using LinearLayoutManager in a small screen
- * and shows items using GridLayoutManager in a large screen.
- */
 class SearchUserFragment : Fragment() {
 
     private var _binding: FragmentSearchUserBinding? = null
