@@ -64,6 +64,7 @@ class FortyTwoAuthInterceptor(private val context: Context) : Interceptor {
                 {
                     return errorResponse
                 }
+                requestBuilder.removeHeader("Authorization")
                 requestBuilder.addHeader("Authorization", "Bearer $accessToken")
                 response = chain.proceed(requestBuilder.build())
             }

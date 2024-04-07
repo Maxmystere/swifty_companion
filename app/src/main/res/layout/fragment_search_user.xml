@@ -5,6 +5,7 @@
     android:id="@+id/linear_search_user"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.fragments.SearchUserFragment">
@@ -15,12 +16,20 @@
         android:layout_weight="1" />
 
     <SearchView
+        android:id="@+id/search_user_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_user_search_view"
+        android:iconifiedByDefault="false"
         android:imeOptions="actionSearch|flagForceAscii"
-        android:queryHint="@string/search_for_a_student"
-        android:iconifiedByDefault="false" />
+        android:queryHint="@string/search_for_a_student">
+
+    </SearchView>
+
+    <Button
+        android:id="@+id/trigger_search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search" />
 
     <Space
         android:layout_width="match_parent"

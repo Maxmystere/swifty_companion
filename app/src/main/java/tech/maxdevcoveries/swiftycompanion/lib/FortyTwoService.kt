@@ -19,19 +19,6 @@ data class AccessToken(
     val tokenType:String,
 )
 
-data class FortyTwoUser(
-    @SerializedName("id")
-    val id:String,
-    @SerializedName("email")
-    val email:String,
-    @SerializedName("first_name")
-    val firstName:String,
-    @SerializedName("last_name")
-    val lastName:String,
-    @SerializedName("displayname")
-    val displayName:String,
-)
-
 interface FortyTwoService {
     @Headers("Accept: application/json")
     @FormUrlEncoded

@@ -22,4 +22,5 @@
         item
     </string>
     <string name="search_for_a_student">Search for a student</string>
+    <string name="description_user_profile_picture">User profile picture</string>
 </resources>
