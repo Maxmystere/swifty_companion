@@ -3,6 +3,7 @@ package tech.maxdevcoveries.swiftycompanion.lib
 import com.google.gson.annotations.SerializedName
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -30,5 +31,5 @@ interface FortyTwoService {
     ): Call<ResponseBody>
 
     @GET("v2/users/{id}")
-    suspend fun getUserInfo(@Path("id") userId:String): FortyTwoUser
+    suspend fun getUserInfo(@Path("id") userId: String): Response<FortyTwoUser>
 }

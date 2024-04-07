@@ -36,43 +36,56 @@ class UserViewerFragment : Fragment() {
 
         _binding = FragmentUserViewerBinding.inflate(inflater, container, false)
 
+        binding.viewSwitcherLoadGuard.displayedChild = 0
+
         CoroutineScope(Dispatchers.IO).launch {
-            updateViewWithUser(
-                FortyTwoApiClient().getApiService(requireContext())
+
+            val obj = FortyTwoApiClient().getApiService(requireContext())
                     .getUserInfo(args.userId)
-            )
+
+            CoroutineScope(Dispatchers.Main).launch {
+                if (obj.isSuccessful && obj.body() != null) {
+                    updateViewWithUser(obj.body()!!)
+                } else {
+                    Toast.makeText(context, obj.message(), Toast.LENGTH_LONG).show()
+                    binding.textErrorCode.text = obj.code().toString()
+                    binding.textErrorMessage.text = obj.errorBody()?.string()
+
+                    binding.viewSwitcherLoadGuard.displayedChild = 2
+                }
+            }
+
         }
         return binding.root
     }
 
     private fun updateViewWithUser(user: FortyTwoUser) {
-        CoroutineScope(Dispatchers.Main).launch {
-            binding.textUserDisplayName.text = user.displayName
-            binding.textUserEmail.text = user.email
-            binding.textUserPoolDate.text = "${user.poolMonth} ${user.poolYear}"
+        binding.textUserDisplayName.text = user.displayName
+        binding.textUserEmail.text = user.email
+        binding.textUserPoolDate.text = "${user.poolMonth} ${user.poolYear}"
 
-            val xpPercent = (user.getActiveCursus().level * 100).toInt() % 100
+        val xpPercent = (user.getActiveCursus().level * 100).toInt() % 100
 
-            binding.progressBarLevel.progress = xpPercent
+        binding.progressBarLevel.progress = xpPercent
+        binding.textViewXpPercent.text = "$xpPercent%"
 
-            binding.textViewLevel.text = "${user.getActiveCursus().level.toInt()}"
-            binding.textViewXpPercent.text = "$xpPercent%"
+        binding.textViewLevel.text = "${user.getActiveCursus().level.toInt()}"
 
-            binding.viewSwitcherLoadGuard.displayedChild = 0 // 1
-            Picasso.get()
-                .load(user.image.link)
-                .placeholder(R.drawable.forty_two_unknown)
-                .into(binding.imageUserProfile)
+        Picasso.get()
+            .load(user.image.link)
+            .placeholder(R.drawable.forty_two_unknown)
+            .into(binding.imageUserProfile)
 
-            binding.recyclerViewProjects.addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    DividerItemDecoration.VERTICAL
-                )
+        binding.recyclerViewProjects.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
             )
-            binding.recyclerViewProjects.adapter = UserProjectAdapter(user.getCursusProjects())
-            binding.recyclerViewProjects.setHasFixedSize(true)
-        }
+        )
+        binding.recyclerViewProjects.adapter = UserProjectAdapter(user.getCursusProjects())
+        binding.recyclerViewProjects.setHasFixedSize(true)
+
+        binding.viewSwitcherLoadGuard.displayedChild = 1 // 1
     }
 
     override fun onDestroyView() {
