@@ -13,6 +13,9 @@ class FortyTwoAuthInterceptor(private val context: Context) : Interceptor {
 
     private var accessToken = sessionManager.fetchAuthToken()
 
+    /*
+    * Try to generate a new token or return Response error if failed
+     */
     private fun tryRegenerateToken(chain: Interceptor.Chain): Response? {
         // Generate request with retrofit
         val retrofitGetToken = Retrofit.Builder()

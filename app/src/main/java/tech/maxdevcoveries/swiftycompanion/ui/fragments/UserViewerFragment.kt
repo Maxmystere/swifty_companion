@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,11 +11,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import tech.maxdevcoveries.swiftycompanion.R
 import tech.maxdevcoveries.swiftycompanion.databinding.FragmentUserViewerBinding
 import tech.maxdevcoveries.swiftycompanion.lib.FortyTwoApiClient
 import tech.maxdevcoveries.swiftycompanion.lib.FortyTwoUser
 import tech.maxdevcoveries.swiftycompanion.ui.adapter.UserProjectAdapter
+
 
 class UserViewerFragment : Fragment() {
 
@@ -47,9 +48,18 @@ class UserViewerFragment : Fragment() {
                 if (obj.isSuccessful && obj.body() != null) {
                     updateViewWithUser(obj.body()!!)
                 } else {
-                    Toast.makeText(context, obj.message(), Toast.LENGTH_LONG).show()
-                    binding.textErrorCode.text = obj.code().toString()
-                    binding.textErrorMessage.text = obj.errorBody()?.string()
+                    val jsonError = obj.errorBody()?.string()?.let { JSONObject(it) }
+                    val errorText = jsonError?.optString("error")
+                    val errorDescText = jsonError?.optString("error_description")
+
+                    if (errorText?.isNotEmpty() == true)
+                        binding.textErrorCode.text = errorText
+                    else
+                        binding.textErrorCode.text = obj.code().toString()
+                    if (errorDescText?.isNotEmpty() == true)
+                        binding.textErrorMessage.text = errorDescText
+                    else
+                        binding.textErrorMessage.text = obj.errorBody()?.string()
 
                     binding.viewSwitcherLoadGuard.displayedChild = 2
                 }

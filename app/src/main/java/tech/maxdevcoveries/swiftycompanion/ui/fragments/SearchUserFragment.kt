@@ -1,16 +1,12 @@
 package tech.maxdevcoveries.swiftycompanion.ui.fragments
 
 import android.os.Bundle
-import android.provider.SearchRecentSuggestions
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import tech.maxdevcoveries.swiftycompanion.FortyTwoSearchRecentSuggestions
 import tech.maxdevcoveries.swiftycompanion.databinding.FragmentSearchUserBinding
 
 class SearchUserFragment : Fragment() {
@@ -36,12 +32,6 @@ class SearchUserFragment : Fragment() {
         binding.searchUserSearchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
-                SearchRecentSuggestions(
-                    context,
-                    FortyTwoSearchRecentSuggestions.AUTHORITY,
-                    FortyTwoSearchRecentSuggestions.MODE
-                ).saveRecentQuery(query, null)
 
                 if (query != null) {
 
