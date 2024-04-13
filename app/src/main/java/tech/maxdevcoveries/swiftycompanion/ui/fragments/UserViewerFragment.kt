@@ -1,5 +1,6 @@
 package tech.maxdevcoveries.swiftycompanion.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +70,7 @@ class UserViewerFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateViewWithUser(user: FortyTwoUser) {
         binding.textUserDisplayName.text = user.displayName
         binding.textUserEmail.text = user.email

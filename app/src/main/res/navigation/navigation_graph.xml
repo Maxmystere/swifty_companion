@@ -26,6 +26,7 @@
         tools:layout="@layout/fragment_user_viewer">
         <argument
             android:name="userId"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="norminet" />
     </fragment>
 </navigation>
