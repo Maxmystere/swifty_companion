@@ -42,25 +42,37 @@ class UserViewerFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val obj = FortyTwoApiClient().getApiService(requireContext())
+            try {
+                val obj = FortyTwoApiClient().getApiService(requireContext())
                     .getUserInfo(args.userId)
 
-            CoroutineScope(Dispatchers.Main).launch {
-                if (obj.isSuccessful && obj.body() != null) {
-                    updateViewWithUser(obj.body()!!)
-                } else {
-                    val jsonError = obj.errorBody()?.string()?.let { JSONObject(it) }
-                    val errorText = jsonError?.optString("error")
-                    val errorDescText = jsonError?.optString("error_description")
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (obj.isSuccessful && obj.body() != null) {
+                        updateViewWithUser(obj.body()!!)
+                    } else {
+                        val jsonError = obj.errorBody()?.string()?.let { JSONObject(it) }
+                        val errorText = jsonError?.optString("error")
+                        val errorDescText = jsonError?.optString("error_description")
 
-                    if (errorText?.isNotEmpty() == true)
-                        binding.textErrorCode.text = errorText
-                    else
-                        binding.textErrorCode.text = obj.code().toString()
-                    if (errorDescText?.isNotEmpty() == true)
-                        binding.textErrorMessage.text = errorDescText
-                    else
-                        binding.textErrorMessage.text = obj.errorBody()?.string()
+                        if (errorText?.isNotEmpty() == true)
+                            binding.textErrorCode.text = errorText
+                        else
+                            binding.textErrorCode.text = obj.code().toString()
+                        if (errorDescText?.isNotEmpty() == true)
+                            binding.textErrorMessage.text = errorDescText
+                        else
+                            binding.textErrorMessage.text = obj.errorBody()?.string()
+
+                        binding.viewSwitcherLoadGuard.displayedChild = 2
+                    }
+                }
+            } catch (e: Exception) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val errorText = "No internet"
+                    val errorDescText = "Please check your internet connection"
+
+                    binding.textErrorCode.text = errorText
+                    binding.textErrorMessage.text = errorDescText
 
                     binding.viewSwitcherLoadGuard.displayedChild = 2
                 }
